@@ -1,0 +1,136 @@
+@mixin absolute-positioning {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.clock {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__outer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+
+    @media (max-width: 650px) {
+      margin: 0 10px;
+    }
+  }
+  &__divider {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    border-left: 10px solid #fff;
+    border-right: 10px solid #fff;
+    box-sizing: border-box;
+    &:nth-of-type(5n) {
+      height: 6px;
+      border-left: 20px solid #fff;
+      border-right: 20px solid #fff;
+    }
+  }
+  &__info {
+    @include absolute-positioning;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: silver;
+
+    @media (max-width: 650px) {
+      font-size: 1.2rem;
+    }
+    &--left {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 15%;
+      transform: translateY(-50%);
+    }
+    &--right {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 15%;
+      transform: translateY(-50%);
+    }
+    &--bottom {
+      display: inline-block;
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+
+      @media (max-width: 650px) {
+        bottom: 35%;
+      }
+    }
+  }
+  &__inner {
+    @include absolute-positioning;
+  }
+  &__hour,
+  &__minute,
+  &__second {
+    position: absolute;
+    width: 12px;
+    background: #fff;
+    left: calc(50% - 6px);
+    transform-origin: bottom center;
+    border-radius: 10px;
+    opacity: 0.7;
+  }
+  &__hour {
+    height: calc(50% - 150px);
+    margin-top: 150px;
+
+    @media (max-width: 650px) {
+      height: calc(50% - 230px);
+      margin-top: 230px;
+    }
+  }
+  &__minute {
+    height: calc(50% - 70px);
+    margin-top: 70px;
+
+    @media (max-width: 650px) {
+      height: calc(50% - 185px);
+      margin-top: 185px;
+    }
+  }
+  &__second {
+    height: calc(50% - 50px);
+    margin-top: 50px;
+    width: 8px;
+    left: calc(50% - 4px);
+    background: red;
+
+    @media (max-width: 650px) {
+      height: calc(50% - 180px);
+      margin-top: 180px;
+    }
+  }
+  &__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: red;
+    border: 4px solid #fff;
+    border-radius: 50%;
+  }
+}
+
+@for $i from 1 through 30 {
+  .clock__divider:nth-of-type(#{$i}) {
+    transform: rotateZ(calc(90deg + 6deg * #{$i}));
+  }
+}
